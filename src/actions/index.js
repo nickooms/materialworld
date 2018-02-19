@@ -29,6 +29,16 @@ import {
 } from './streets';
 
 import {
+  SELECT_STREET, INVALIDATE_STREET,
+  selectStreet, invalidateStreet,
+} from './street';
+
+import {
+  REQUEST_HOUSENUMBERS, RECEIVE_HOUSENUMBERS,
+  shouldFetchHousenumbers, fetchHousenumbersIfNeeded,
+} from './housenumbers';
+
+import {
   TOGGLE_MOBILE_DRAWER_OPEN,
   toggleMobileDrawerOpen,
 } from './mobileDrawer';
@@ -50,6 +60,12 @@ export { selectCity, invalidateCity };
 
 export { REQUEST_STREETS, RECEIVE_STREETS };
 export { shouldFetchStreets, fetchStreetsIfNeeded };
+
+export { SELECT_STREET, INVALIDATE_STREET };
+export { selectStreet, invalidateStreet };
+
+export { REQUEST_HOUSENUMBERS, RECEIVE_HOUSENUMBERS };
+export { shouldFetchHousenumbers, fetchHousenumbersIfNeeded };
 
 export { TOGGLE_MOBILE_DRAWER_OPEN };
 export { toggleMobileDrawerOpen };

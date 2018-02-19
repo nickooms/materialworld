@@ -1,0 +1,156 @@
+/* roboto-100normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100;
+  src:
+    local('Roboto Thin '),
+    local('Roboto-Thin'),
+    url('6412b65c723443a6d11f98d1862dcf87.woff2') format('woff2'), 
+    url('2c111d14398e26454b6107b7fa45f8b1.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-100italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 100;
+  src:
+    local('Roboto Thin italic'),
+    local('Roboto-Thinitalic'),
+    url('001bc985369e07c36da63c3a5807dd8a.woff2') format('woff2'), 
+    url('76bd0ed654f566203f3700f9c4149047.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-300normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src:
+    local('Roboto Light '),
+    local('Roboto-Light'),
+    url('0558397d9827c19bc5274db9d6177426.woff2') format('woff2'), 
+    url('84cd46f9e4b30cb93c77291da41b0603.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-300italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 300;
+  src:
+    local('Roboto Light italic'),
+    local('Roboto-Lightitalic'),
+    url('053a93fad480da3491185ad8db534ef3.woff2') format('woff2'), 
+    url('d8c62d50a4afcf3a1c661444b7bb53f6.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-400normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+    local('Roboto Regular '),
+    local('Roboto-Regular'),
+    url('754442f5fa73c4811ce9855d4f536eb6.woff2') format('woff2'), 
+    url('9b8653db75ef03f5a7f2a81f85c731c9.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-400italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 400;
+  src:
+    local('Roboto Regular italic'),
+    local('Roboto-Regularitalic'),
+    url('9df5786c8713035be2357ba83e07e02b.woff2') format('woff2'), 
+    url('ea70475a9112ea89982ab2b14c93b292.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-500normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src:
+    local('Roboto Medium '),
+    local('Roboto-Medium'),
+    url('813970ac7488a5aea6439f4d99857b19.woff2') format('woff2'), 
+    url('f07c70221f3771fef5a13bd91718aafd.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-500italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 500;
+  src:
+    local('Roboto Medium italic'),
+    local('Roboto-Mediumitalic'),
+    url('0bfe26399007ffd7b51d1c5461add155.woff2') format('woff2'), 
+    url('57df5cd7bda1c923c55ceb09908e30ea.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-700normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src:
+    local('Roboto Bold '),
+    local('Roboto-Bold'),
+    url('a1000087939455a93b9d7036fbee69dc.woff2') format('woff2'), 
+    url('8571f118ec458753049f82bf429fc8cd.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-700italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 700;
+  src:
+    local('Roboto Bold italic'),
+    local('Roboto-Bolditalic'),
+    url('d4d4e786582b04d0a848580b0868a573.woff2') format('woff2'), 
+    url('19a594a78d298b8a2fa5cc58143df383.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-900normal - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src:
+    local('Roboto Black '),
+    local('Roboto-Black'),
+    url('893a30caf2591f418506b0eddbb2506a.woff2') format('woff2'), 
+    url('475f20ad10fa169269e85bfed64c475e.woff') format('woff'); /* Modern Browsers */
+}
+
+/* roboto-900italic - latin */
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 900;
+  src:
+    local('Roboto Black italic'),
+    local('Roboto-Blackitalic'),
+    url('ae6bbeadb78f9f077eb594e7dad2c644.woff2') format('woff2'), 
+    url('a90b171a3e5403bb1f427b4d93e1e9a1.woff') format('woff'); /* Modern Browsers */
+}
+
