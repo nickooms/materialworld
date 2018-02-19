@@ -35,7 +35,8 @@ const request = async (operation, params) => {
   const parameters = Object.entries(params).map(nameValueObject);
   const parametersJson = JSON.stringify(parameters);
   let text;
-  console.time('check-cache');
+  const log = `CACHE-CHECK ${operation}`;
+  console.time(log);
   try {
     const db = await dbPromise;
     const row = await db.get('SELECT response FROM Cache WHERE operation = ? AND params = ?', [operation, parametersJson]);
@@ -43,7 +44,7 @@ const request = async (operation, params) => {
   } catch (err) {
     console.log(err);
   }
-  console.timeEnd('check-cache');
+  console.timeEnd(log);
   if (!text) {
     const body = querystring.stringify({ operation, parametersJson });
     const response = await fetch(url, { method, headers, body });
