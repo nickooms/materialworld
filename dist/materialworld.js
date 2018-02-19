@@ -36192,6 +36192,65 @@ var fetchHousenumbersIfNeeded = exports.fetchHousenumbersIfNeeded = function fet
     return false;
   };
 };
+},{"cross-fetch":182}],573:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fetchRoadObjectsIfNeeded = exports.RECEIVE_ROAD_OBJECTS = exports.REQUEST_ROAD_OBJECTS = undefined;
+
+var _crossFetch = require('cross-fetch');
+
+var _crossFetch2 = _interopRequireDefault(_crossFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var REQUEST_ROAD_OBJECTS = exports.REQUEST_ROAD_OBJECTS = 'REQUEST_ROAD_OBJECTS';
+var RECEIVE_ROAD_OBJECTS = exports.RECEIVE_ROAD_OBJECTS = 'RECEIVE_ROAD_OBJECTS';
+
+var requestRoadObjects = function requestRoadObjects(street) {
+  return {
+    type: REQUEST_ROAD_OBJECTS,
+    street: street
+  };
+};
+
+var receiveRoadObjects = function receiveRoadObjects(street, json) {
+  return {
+    type: RECEIVE_ROAD_OBJECTS,
+    street: street,
+    roadObjects: json,
+    receivedAt: Date.now()
+  };
+};
+
+var fetchRoadObjects = function fetchRoadObjects(street) {
+  return function (dispatch) {
+    dispatch(requestRoadObjects(street));
+    return (0, _crossFetch2.default)('http://localhost:3000/street/' + street + '/objects').then(function (response) {
+      return response.json();
+    }).then(function (json) {
+      return dispatch(receiveRoadObjects(street, json));
+    });
+  };
+};
+
+var shouldFetchRoadObjects = function shouldFetchRoadObjects(state, street) {
+  var roadObjects = state.roadObjectsByStreet[street];
+  if (!roadObjects) return true;
+  if (roadObjects.isFetching) return false;
+  return roadObjects.didInvalidate;
+};
+
+var fetchRoadObjectsIfNeeded = exports.fetchRoadObjectsIfNeeded = function fetchRoadObjectsIfNeeded(street) {
+  return function (dispatch, getState) {
+    if (shouldFetchRoadObjects(getState(), street)) {
+      return dispatch(fetchRoadObjects(street));
+    }
+    return false;
+  };
+};
 },{"cross-fetch":182}],135:[function(require,module,exports) {
 'use strict';
 
@@ -36211,7 +36270,7 @@ var toggleMobileDrawerOpen = exports.toggleMobileDrawerOpen = function toggleMob
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toggleMobileDrawerOpen = exports.TOGGLE_MOBILE_DRAWER_OPEN = exports.fetchHousenumbersIfNeeded = exports.shouldFetchHousenumbers = exports.RECEIVE_HOUSENUMBERS = exports.REQUEST_HOUSENUMBERS = exports.invalidateStreet = exports.selectStreet = exports.INVALIDATE_STREET = exports.SELECT_STREET = exports.fetchStreetsIfNeeded = exports.shouldFetchStreets = exports.RECEIVE_STREETS = exports.REQUEST_STREETS = exports.invalidateCity = exports.selectCity = exports.INVALIDATE_CITY = exports.SELECT_CITY = exports.invalidateRegion = exports.selectRegion = exports.INVALIDATE_REGION = exports.SELECT_REGION = exports.fetchCitiesIfNeeded = exports.shouldFetchCities = exports.RECEIVE_CITIES = exports.REQUEST_CITIES = exports.invalidateSubreddit = exports.selectSubreddit = exports.INVALIDATE_SUBREDDIT = exports.SELECT_SUBREDDIT = exports.fetchPostsIfNeeded = exports.shouldFetchPosts = exports.RECEIVE_POSTS = exports.REQUEST_POSTS = undefined;
+exports.toggleMobileDrawerOpen = exports.TOGGLE_MOBILE_DRAWER_OPEN = exports.fetchRoadObjectsIfNeeded = exports.shouldFetchRoadObjects = exports.RECEIVE_ROAD_OBJECTS = exports.REQUEST_ROAD_OBJECTS = exports.fetchHousenumbersIfNeeded = exports.shouldFetchHousenumbers = exports.RECEIVE_HOUSENUMBERS = exports.REQUEST_HOUSENUMBERS = exports.invalidateStreet = exports.selectStreet = exports.INVALIDATE_STREET = exports.SELECT_STREET = exports.fetchStreetsIfNeeded = exports.shouldFetchStreets = exports.RECEIVE_STREETS = exports.REQUEST_STREETS = exports.invalidateCity = exports.selectCity = exports.INVALIDATE_CITY = exports.SELECT_CITY = exports.invalidateRegion = exports.selectRegion = exports.INVALIDATE_REGION = exports.SELECT_REGION = exports.fetchCitiesIfNeeded = exports.shouldFetchCities = exports.RECEIVE_CITIES = exports.REQUEST_CITIES = exports.invalidateSubreddit = exports.selectSubreddit = exports.INVALIDATE_SUBREDDIT = exports.SELECT_SUBREDDIT = exports.fetchPostsIfNeeded = exports.shouldFetchPosts = exports.RECEIVE_POSTS = exports.REQUEST_POSTS = undefined;
 
 var _posts = require('./posts');
 
@@ -36228,6 +36287,8 @@ var _streets = require('./streets');
 var _street = require('./street');
 
 var _housenumbers = require('./housenumbers');
+
+var _roadObjects = require('./roadObjects');
 
 var _mobileDrawer = require('./mobileDrawer');
 
@@ -36263,9 +36324,13 @@ exports.REQUEST_HOUSENUMBERS = _housenumbers.REQUEST_HOUSENUMBERS;
 exports.RECEIVE_HOUSENUMBERS = _housenumbers.RECEIVE_HOUSENUMBERS;
 exports.shouldFetchHousenumbers = _housenumbers.shouldFetchHousenumbers;
 exports.fetchHousenumbersIfNeeded = _housenumbers.fetchHousenumbersIfNeeded;
+exports.REQUEST_ROAD_OBJECTS = _roadObjects.REQUEST_ROAD_OBJECTS;
+exports.RECEIVE_ROAD_OBJECTS = _roadObjects.RECEIVE_ROAD_OBJECTS;
+exports.shouldFetchRoadObjects = _roadObjects.shouldFetchRoadObjects;
+exports.fetchRoadObjectsIfNeeded = _roadObjects.fetchRoadObjectsIfNeeded;
 exports.TOGGLE_MOBILE_DRAWER_OPEN = _mobileDrawer.TOGGLE_MOBILE_DRAWER_OPEN;
 exports.toggleMobileDrawerOpen = _mobileDrawer.toggleMobileDrawerOpen;
-},{"./posts":129,"./subreddit":130,"./cities":131,"./region":132,"./city":133,"./streets":134,"./street":563,"./housenumbers":568,"./mobileDrawer":135}],545:[function(require,module,exports) {
+},{"./posts":129,"./subreddit":130,"./cities":131,"./region":132,"./city":133,"./streets":134,"./street":563,"./housenumbers":568,"./roadObjects":573,"./mobileDrawer":135}],545:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48657,7 +48722,262 @@ var mapStateToProps = function mapStateToProps(_ref2) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps)(AsyncHousenumbers);
-},{"react":8,"prop-types":54,"react-redux":19,"material-ui/Button":395,"../actions":65,"../components/Picker":385,"../components/Housenumbers":564}],360:[function(require,module,exports) {
+},{"react":8,"prop-types":54,"react-redux":19,"material-ui/Button":395,"../actions":65,"../components/Picker":385,"../components/Housenumbers":564}],571:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _styles = require('material-ui/styles');
+
+var _List = require('material-ui/List');
+
+var _List2 = _interopRequireDefault(_List);
+
+var _Avatar = require('material-ui/Avatar');
+
+var _Avatar2 = _interopRequireDefault(_Avatar);
+
+var _Image = require('material-ui-icons/Image');
+
+var _Image2 = _interopRequireDefault(_Image);
+
+var _Paper = require('material-ui/Paper');
+
+var _Paper2 = _interopRequireDefault(_Paper);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var styles = function styles(theme) {
+  return {
+    root: {
+      maxWidth: 360,
+      marginTop: theme.spacing.unit * 6,
+      overflowX: 'auto'
+    }
+  };
+};
+
+var RoadObjects = function RoadObjects(props) {
+  return _react2.default.createElement(
+    _Paper2.default,
+    { className: props.classes.root },
+    _react2.default.createElement(
+      _List2.default,
+      { component: 'nav' },
+      props.roadObjects.map(function (_ref) {
+        var id = _ref.id,
+            kind = _ref.kind;
+        return _react2.default.createElement(
+          _List.ListItem,
+          { button: true, key: id },
+          _react2.default.createElement(
+            _Avatar2.default,
+            null,
+            _react2.default.createElement(_Image2.default, null)
+          ),
+          _react2.default.createElement(_List.ListItemText, { primary: kind, secondary: id })
+        );
+      })
+    )
+  );
+};
+
+RoadObjects.propTypes = {
+  roadObjects: _propTypes2.default.array.isRequired,
+  classes: _propTypes2.default.object.isRequired
+};
+
+exports.default = (0, _styles.withStyles)(styles)(RoadObjects);
+},{"react":8,"prop-types":54,"material-ui/styles":53,"material-ui/List":469,"material-ui/Avatar":474,"material-ui-icons/Image":458,"material-ui/Paper":413}],570:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRedux = require('react-redux');
+
+var _Button = require('material-ui/Button');
+
+var _Button2 = _interopRequireDefault(_Button);
+
+var _actions = require('../actions');
+
+var _Picker = require('../components/Picker');
+
+var _Picker2 = _interopRequireDefault(_Picker);
+
+var _RoadObjects = require('../components/RoadObjects');
+
+var _RoadObjects2 = _interopRequireDefault(_RoadObjects);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AsyncRoadObjects = function (_Component) {
+  _inherits(AsyncRoadObjects, _Component);
+
+  function AsyncRoadObjects() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, AsyncRoadObjects);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = AsyncRoadObjects.__proto__ || Object.getPrototypeOf(AsyncRoadObjects)).call.apply(_ref, [this].concat(args))), _this), _this.handleChange = function (nextStreet) {
+      var dispatch = _this.props.dispatch;
+
+      dispatch((0, _actions.selectStreet)(nextStreet));
+      dispatch((0, _actions.fetchRoadObjectsIfNeeded)(nextStreet));
+    }, _this.handleRefreshClick = function (e) {
+      e.preventDefault();
+      var _this$props = _this.props,
+          dispatch = _this$props.dispatch,
+          selectedStreet = _this$props.selectedStreet;
+
+      dispatch((0, _actions.invalidateStreet)(selectedStreet));
+      dispatch((0, _actions.fetchRoadObjectsIfNeeded)(selectedStreet));
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(AsyncRoadObjects, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _props = this.props,
+          dispatch = _props.dispatch,
+          selectedStreet = _props.selectedStreet;
+
+      dispatch((0, _actions.fetchRoadObjectsIfNeeded)(selectedStreet));
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      if (this.props.selectedStreet !== prevProps.selectedStreet) {
+        var _props2 = this.props,
+            dispatch = _props2.dispatch,
+            selectedStreet = _props2.selectedStreet;
+
+        dispatch((0, _actions.fetchRoadObjectsIfNeeded)(selectedStreet));
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props3 = this.props,
+          selectedStreet = _props3.selectedStreet,
+          roadObjects = _props3.roadObjects,
+          isFetching = _props3.isFetching,
+          lastUpdated = _props3.lastUpdated;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement('br', null),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(_Picker2.default, {
+          value: selectedStreet,
+          onChange: this.handleChange,
+          options: ['7338', '5514']
+        }),
+        _react2.default.createElement(
+          'p',
+          null,
+          lastUpdated && _react2.default.createElement(
+            'span',
+            null,
+            'Last updated at ',
+            new Date(lastUpdated).toLocaleTimeString(),
+            '.',
+            ' '
+          ),
+          !isFetching && _react2.default.createElement(
+            _Button2.default,
+            { raised: true, onClick: this.handleRefreshClick },
+            'Refresh'
+          )
+        ),
+        isFetching && roadObjects.length === 0 && _react2.default.createElement(
+          'h2',
+          null,
+          'Loading...'
+        ),
+        !isFetching && roadObjects.length === 0 && _react2.default.createElement(
+          'h2',
+          null,
+          'Empty.'
+        ),
+        roadObjects.length > 0 && _react2.default.createElement(
+          'div',
+          { style: { opacity: isFetching ? 0.5 : 1 } },
+          _react2.default.createElement(_RoadObjects2.default, { roadObjects: roadObjects })
+        )
+      );
+    }
+  }]);
+
+  return AsyncRoadObjects;
+}(_react.Component);
+
+AsyncRoadObjects.defaultProps = {
+  lastUpdated: null
+};
+AsyncRoadObjects.propTypes = {
+  selectedStreet: _propTypes2.default.string.isRequired,
+  roadObjects: _propTypes2.default.array.isRequired,
+  isFetching: _propTypes2.default.bool.isRequired,
+  lastUpdated: _propTypes2.default.number,
+  dispatch: _propTypes2.default.func.isRequired
+};
+
+
+var mapStateToProps = function mapStateToProps(_ref2) {
+  var selectedStreet = _ref2.selectedStreet,
+      roadObjectsByStreet = _ref2.roadObjectsByStreet;
+
+  var _ref3 = roadObjectsByStreet[selectedStreet] || { isFetching: true, items: [] },
+      isFetching = _ref3.isFetching,
+      lastUpdated = _ref3.lastUpdated,
+      roadObjects = _ref3.items;
+
+  return {
+    selectedStreet: selectedStreet,
+    roadObjects: roadObjects,
+    isFetching: isFetching,
+    lastUpdated: lastUpdated
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(AsyncRoadObjects);
+},{"react":8,"prop-types":54,"react-redux":19,"material-ui/Button":395,"../actions":65,"../components/Picker":385,"../components/RoadObjects":571}],360:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -48696,6 +49016,10 @@ var _AsyncHousenumbers = require('../containers/AsyncHousenumbers');
 
 var _AsyncHousenumbers2 = _interopRequireDefault(_AsyncHousenumbers);
 
+var _AsyncRoadObjects = require('../containers/AsyncRoadObjects');
+
+var _AsyncRoadObjects2 = _interopRequireDefault(_AsyncRoadObjects);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -48723,6 +49047,7 @@ var Main = function Main(_ref) {
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _AsyncApp2.default }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/street/:id', component: _Street2.default }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/street/:id/housenumbers', component: _AsyncHousenumbers2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/street/:id/objects', component: _AsyncRoadObjects2.default }),
     _react2.default.createElement(_reactRouterDom.Route, { path: '/region/:id/cities', component: _AsyncCities2.default }),
     _react2.default.createElement(_reactRouterDom.Route, { path: '/city/:id/streets', component: _AsyncStreets2.default })
   );
@@ -48733,7 +49058,7 @@ Main.propTypes = {
 };
 
 exports.default = (0, _styles.withStyles)(styles, { withTheme: true })(Main);
-},{"react":8,"prop-types":54,"react-router-dom":20,"material-ui/styles":53,"../containers/AsyncApp":373,"../containers/AsyncCities":374,"../containers/AsyncStreets":375,"./Street":376,"../containers/AsyncHousenumbers":565}],399:[function(require,module,exports) {
+},{"react":8,"prop-types":54,"react-router-dom":20,"material-ui/styles":53,"../containers/AsyncApp":373,"../containers/AsyncCities":374,"../containers/AsyncStreets":375,"./Street":376,"../containers/AsyncHousenumbers":565,"../containers/AsyncRoadObjects":570}],399:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53443,7 +53768,87 @@ var housenumbersByStreet = function housenumbersByStreet() {
 };
 
 exports.default = housenumbersByStreet;
-},{"../actions":65,"./housenumbers":567}],39:[function(require,module,exports) {
+},{"../actions":65,"./housenumbers":567}],572:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _actions = require('../actions');
+
+var initialState = {
+  isFetching: false,
+  didInvalidate: false,
+  items: []
+};
+
+var roadObjects = function roadObjects() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.INVALIDATE_STREET:
+      return _extends({}, state, {
+        didInvalidate: true
+      });
+    case _actions.REQUEST_ROAD_OBJECTS:
+      return _extends({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      });
+    case _actions.RECEIVE_ROAD_OBJECTS:
+      return _extends({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.roadObjects,
+        lastUpdated: action.receivedAt
+      });
+    default:
+      return state;
+  }
+};
+
+exports.default = roadObjects;
+},{"../actions":65}],574:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _actions = require('../actions');
+
+var _roadObjects = require('./roadObjects');
+
+var _roadObjects2 = _interopRequireDefault(_roadObjects);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var initialState = {};
+
+var roadObjectsByStreet = function roadObjectsByStreet() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+  var action = arguments[1];
+
+  switch (action.type) {
+    case _actions.INVALIDATE_STREET:
+    case _actions.RECEIVE_ROAD_OBJECTS:
+    case _actions.REQUEST_ROAD_OBJECTS:
+      return _extends({}, state, _defineProperty({}, action.street, (0, _roadObjects2.default)(state[action.street], action)));
+    default:
+      return state;
+  }
+};
+
+exports.default = roadObjectsByStreet;
+},{"../actions":65,"./roadObjects":572}],39:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -53508,6 +53913,10 @@ var _housenumbersByStreet = require('./reducers/housenumbersByStreet');
 
 var _housenumbersByStreet2 = _interopRequireDefault(_housenumbersByStreet);
 
+var _roadObjectsByStreet = require('./reducers/roadObjectsByStreet');
+
+var _roadObjectsByStreet2 = _interopRequireDefault(_roadObjectsByStreet);
+
 var _mobileDrawerOpen = require('./reducers/mobileDrawerOpen');
 
 var _mobileDrawerOpen2 = _interopRequireDefault(_mobileDrawerOpen);
@@ -53523,11 +53932,12 @@ var rootReducer = (0, _redux.combineReducers)({
   selectedCity: _selectedCity2.default,
   selectedStreet: _selectedStreet2.default,
   housenumbersByStreet: _housenumbersByStreet2.default,
+  roadObjectsByStreet: _roadObjectsByStreet2.default,
   mobileDrawerOpen: _mobileDrawerOpen2.default
 });
 
 exports.default = rootReducer;
-},{"redux":30,"./reducers/selectedSubreddit":37,"./reducers/postsBySubreddit":33,"./reducers/selectedRegion":34,"./reducers/citiesByRegion":35,"./reducers/selectedCity":36,"./reducers/streetsByCity":38,"./reducers/selectedStreet":562,"./reducers/housenumbersByStreet":566,"./reducers/mobileDrawerOpen":39}],17:[function(require,module,exports) {
+},{"redux":30,"./reducers/selectedSubreddit":37,"./reducers/postsBySubreddit":33,"./reducers/selectedRegion":34,"./reducers/citiesByRegion":35,"./reducers/selectedCity":36,"./reducers/streetsByCity":38,"./reducers/selectedStreet":562,"./reducers/housenumbersByStreet":566,"./reducers/roadObjectsByStreet":574,"./reducers/mobileDrawerOpen":39}],17:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

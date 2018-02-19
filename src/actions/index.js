@@ -39,6 +39,11 @@ import {
 } from './housenumbers';
 
 import {
+  REQUEST_ROAD_OBJECTS, RECEIVE_ROAD_OBJECTS,
+  shouldFetchRoadObjects, fetchRoadObjectsIfNeeded,
+} from './roadObjects';
+
+import {
   TOGGLE_MOBILE_DRAWER_OPEN,
   toggleMobileDrawerOpen,
 } from './mobileDrawer';
@@ -66,6 +71,9 @@ export { selectStreet, invalidateStreet };
 
 export { REQUEST_HOUSENUMBERS, RECEIVE_HOUSENUMBERS };
 export { shouldFetchHousenumbers, fetchHousenumbersIfNeeded };
+
+export { REQUEST_ROAD_OBJECTS, RECEIVE_ROAD_OBJECTS };
+export { shouldFetchRoadObjects, fetchRoadObjectsIfNeeded };
 
 export { TOGGLE_MOBILE_DRAWER_OPEN };
 export { toggleMobileDrawerOpen };

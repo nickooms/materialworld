@@ -8,6 +8,7 @@ import selectedCity from './reducers/selectedCity';
 import streetsByCity from './reducers/streetsByCity';
 import selectedStreet from './reducers/selectedStreet';
 import housenumbersByStreet from './reducers/housenumbersByStreet';
+import roadObjectsByStreet from './reducers/roadObjectsByStreet';
 import mobileDrawerOpen from './reducers/mobileDrawerOpen';
 
 const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   selectedCity,
   selectedStreet,
   housenumbersByStreet,
+  roadObjectsByStreet,
   mobileDrawerOpen,
 });
 

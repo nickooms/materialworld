@@ -1,18 +1,28 @@
 const request = require('./CRAB');
 const Street = require('./Street');
+const { SorteerVeld } = require('./constants');
+
+const NAME = 'Gemeente';
+const ID = `${NAME}Id`;
 
 class City {
-  static map({ GemeenteId, GemeenteNaam }) {
+  static get ID() {
+    return ID;
+  }
+
+  static get NAME() {
+    return NAME;
+  }
+
+  static map(x) {
     return {
-      id: +GemeenteId,
-      name: GemeenteNaam,
+      id: +x[ID],
+      name: x[`${NAME}Naam`],
     };
   }
 
   static async byId({ id }) {
-    const results = await request('GetGemeenteByGemeenteId', {
-      GemeenteId: id,
-    });
+    const results = await request(`Get${NAME}By${ID}`, { [ID]: id });
     return new City(City.map(results[0]));
   }
 
@@ -20,14 +30,19 @@ class City {
     Object.assign(this, { id, name });
   }
 
+  get ID() {
+    return { [ID]: this.id };
+  }
+
+  async list(name, Class) {
+    const id = this.ID;
+    const operation = `List${name}By${ID}`;
+    const list = await request(operation, { ...id, SorteerVeld });
+    return list.map(x => ({ ...x, ...id })).map(x => Class.map(x));
+  }
+
   async streets() {
-    const results = await request('ListStraatnamenByGemeenteId', {
-      GemeenteId: this.id,
-      SorteerVeld: 0,
-    });
-    return results
-      .map(street => ({ ...street, GemeenteId: this.id }))
-      .map(street => Street.map(street));
+    return this.list('Straatnamen', Street);
   }
 }
 

@@ -1,18 +1,27 @@
 const request = require('./CRAB');
 
+const NAME = 'Wegobject';
+const ID = `Identificator${NAME}`;
+
 class RoadObject {
-  static map({ StraatnaamId, IdentificatorWegobject, AardWegobject }) {
+  static get ID() {
+    return ID;
+  }
+
+  static get NAME() {
+    return NAME;
+  }
+
+  static map(x) {
     return {
-      id: +IdentificatorWegobject,
-      kind: AardWegobject,
-      streetId: +StraatnaamId,
+      id: +x[ID],
+      kind: x[`Aard${NAME}`],
+      streetId: +x[ID],
     };
   }
 
   static async byId({ id }) {
-    const results = await request('GetWegobjectByIdentificatorWegobject', {
-      IdentificatorWegobject: id,
-    });
+    const results = await request(`Get${NAME}By${ID}`, { [ID]: id });
     return new RoadObject(RoadObject.map(results[0]));
   }
 
