@@ -6,7 +6,7 @@ const StreetTabs = ({
   value,
   match: { params: { id } },
 }) => (
-  <Tabs value={value}>
+  <Tabs centered value={value}>
     <Tab label="Street" href={`/street/${id}`} />
     <Tab label="Housenumbers" href={`/street/${id}/housenumbers`} />
     <Tab label="Objects" href={`/street/${id}/objects`} />

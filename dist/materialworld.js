@@ -52822,7 +52822,7 @@ var StreetTabs = function StreetTabs(_ref) {
       id = _ref.match.params.id;
   return _react2.default.createElement(
     _Tabs2.default,
-    { value: value },
+    { centered: true, value: value },
     _react2.default.createElement(_Tabs.Tab, { label: 'Street', href: '/street/' + id }),
     _react2.default.createElement(_Tabs.Tab, { label: 'Housenumbers', href: '/street/' + id + '/housenumbers' }),
     _react2.default.createElement(_Tabs.Tab, { label: 'Objects', href: '/street/' + id + '/objects' }),
@@ -53628,7 +53628,7 @@ var _App2 = _interopRequireDefault(_App);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('root'));
-},{"react":8,"react-dom":9,"typeface-roboto":10,"./src/containers/App":6}],561:[function(require,module,exports) {
+},{"react":8,"react-dom":9,"typeface-roboto":10,"./src/containers/App":6}],569:[function(require,module,exports) {
 
 var global = (1, eval)('this');
 var OldModule = module.bundle.Module;
@@ -53749,5 +53749,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.require, id);
   });
 }
-},{}]},{},[561,4])
+},{}]},{},[569,4])
 //# sourceMappingURL=/dist/materialworld.map
