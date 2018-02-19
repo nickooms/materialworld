@@ -1,0 +1,20 @@
+body {
+  margin: 0px;
+}
+
+div.light, div.dark {
+  margin: 0px;
+  width: 100vw;
+}
+
+div.light {
+  background-color: #ddd;
+}
+
+div.dark {
+  background-color: #333;
+}
+
+label {
+  font-weight: bold;
+}

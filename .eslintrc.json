@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "rules": {
+        "react/jsx-filename-extension": 0,
+        "react/forbid-prop-types": 0,
+        "jsx-a11y/anchor-is-valid": [ "error", {
+            "components": [ "Link" ],
+            "specialLink": [ "hrefLeft", "hrefRight", "to" ],
+            "aspects": [ "noHref", "invalidHref", "preferButton" ]
+        }],
+        "no-underscore-dangle": [ "error", {
+            "allow": [ "__REDUX_DEVTOOLS_EXTENSION__" ]
+        }],
+        "no-console": 0
+    }
+}
