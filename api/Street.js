@@ -1,5 +1,6 @@
 const request = require('./CRAB');
 const Housenumber = require('./Housenumber');
+const RoadObject = require('./RoadObject');
 
 class Street {
   static map({ GemeenteId, StraatnaamId, Straatnaam }) {
@@ -37,6 +38,16 @@ class Street {
     return results
       .map(housenumber => ({ ...housenumber, StraatnaamId: this.id }))
       .map(housenumber => Housenumber.map(housenumber));
+  }
+
+  async objects() {
+    const results = await request('ListWegobjectenByStraatnaamId', {
+      StraatnaamId: this.id,
+      SorteerVeld: 0,
+    });
+    return results
+      .map(roadObject => ({ ...roadObject, StraatnaamId: this.id }))
+      .map(roadObject => RoadObject.map(roadObject));
   }
 }
 
