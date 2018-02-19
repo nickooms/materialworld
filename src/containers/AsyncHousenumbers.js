@@ -51,6 +51,8 @@ class AsyncHousenumbers extends Component {
     } = this.props;
     return (
       <div>
+        <br />
+        <br />
         <Picker
           value={selectedStreet}
           onChange={this.handleChange}

@@ -9,7 +9,7 @@ import Paper from 'material-ui/Paper';
 const styles = theme => ({
   root: {
     maxWidth: 360,
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 6,
     overflowX: 'auto',
   },
 });
