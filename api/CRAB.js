@@ -32,6 +32,8 @@ const parseTable = (html) => {
 };
 
 const request = async (operation, params) => {
+  const SELECT = 'SELECT response FROM Cache WHERE operation = ? AND params = ?';
+  const INSERT = 'INSERT INTO Cache (operation, params, response) VALUES (?, ?, ?)';
   const parameters = Object.entries(params).map(nameValueObject);
   const parametersJson = JSON.stringify(parameters);
   let text;
@@ -39,7 +41,7 @@ const request = async (operation, params) => {
   console.time(log);
   try {
     const db = await dbPromise;
-    const row = await db.get('SELECT response FROM Cache WHERE operation = ? AND params = ?', [operation, parametersJson]);
+    const row = await db.get(SELECT, [operation, parametersJson]);
     if (row) text = row.response;
   } catch (err) {
     console.log(err);
@@ -51,7 +53,7 @@ const request = async (operation, params) => {
     text = await response.text();
     try {
       const db = await dbPromise;
-      await db.run('INSERT INTO Cache (operation, params, response) VALUES (?, ?, ?)', [operation, parametersJson, text]);
+      await db.run(INSERT, [operation, parametersJson, text]);
     } catch (err) {
       console.log(err);
     }
