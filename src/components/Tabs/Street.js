@@ -9,8 +9,8 @@ const StreetTabs = ({
   <Tabs centered value={value}>
     <Tab label="Street" href={`/street/${id}`} />
     <Tab label="Housenumbers" href={`/street/${id}/housenumbers`} />
-    <Tab label="Objects" href={`/street/${id}/objects`} />
-    <Tab label="Segments" href={`/street/${id}/segments`} />
+    <Tab label="Road Objects" href={`/street/${id}/objects`} />
+    <Tab label="Road Segments" href={`/street/${id}/segments`} />
   </Tabs>
 );
 

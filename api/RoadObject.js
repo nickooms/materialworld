@@ -15,7 +15,7 @@ class RoadObject {
   static map(x) {
     return {
       id: +x[ID],
-      kind: x[`Aard${NAME}`],
+      kind: +x[`Aard${NAME}`],
       streetId: +x[ID],
     };
   }

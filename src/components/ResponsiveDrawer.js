@@ -14,12 +14,17 @@ import TemporaryDrawer from './Drawer/TemporaryDrawer';
 import PermanentDrawer from './Drawer/PermanentDrawer';
 import Drawer from './Drawer/Drawer';
 import StreetTabs from './Tabs/Street';
+import RoadObjectTabs from './Tabs/RoadObject';
 
 const streetRoutes = [
   '',
   '/housenumbers',
   '/objects',
   '/segments',
+];
+
+const roadObjectRoutes = [
+  '',
 ];
 
 const ResponsiveDrawer = ({ open, toggle }) => (
@@ -38,6 +43,16 @@ const ResponsiveDrawer = ({ open, toggle }) => (
               exact
               path={path}
               render={props => <StreetTabs value={index} {...props} />}
+            />
+          ))}
+        {roadObjectRoutes
+          .map(path => `/object/:id${path}`)
+          .map((path, index) => (
+            <Route
+              key={path}
+              exact
+              path={path}
+              render={props => <RoadObjectTabs value={index} {...props} />}
             />
           ))}
       </AppBar>

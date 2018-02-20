@@ -9,6 +9,7 @@ import AsyncStreets from '../containers/AsyncStreets';
 import Street from './Street';
 import AsyncHousenumbers from '../containers/AsyncHousenumbers';
 import AsyncRoadObjects from '../containers/AsyncRoadObjects';
+import RoadObject from '../components/RoadObject';
 
 const styles = theme => ({
   content: {
@@ -30,6 +31,7 @@ const Main = ({ classes }) => (
     <Route exact path="/street/:id" component={Street} />
     <Route exact path="/street/:id/housenumbers" component={AsyncHousenumbers} />
     <Route exact path="/street/:id/objects" component={AsyncRoadObjects} />
+    <Route exact path="/object/:id" component={RoadObject} />
     <Route path="/region/:id/cities" component={AsyncCities} />
     <Route path="/city/:id/streets" component={AsyncStreets} />
   </main>
