@@ -1,10 +1,12 @@
 const express = require('express');
 const sqlite = require('sqlite');
+const chalk = require('chalk');
 
 const Street = require('./Street');
 const Region = require('./Region');
 const City = require('./City');
 
+const PORT = 3000;
 const app = express();
 const dbPromise = sqlite.open('./database.sqlite', { Promise });
 
@@ -98,4 +100,8 @@ app.get('/street/:id/objects', async (req, res, next) => {
   }
 });
 
-app.listen(3000);
+app.listen(PORT);
+
+// console.log(JSON.stringify(chalk));
+
+console.log(`Server running at ${chalk.magenta(`http://localhost:${PORT}`)}`);

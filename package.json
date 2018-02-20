@@ -4,7 +4,8 @@
   "description": "material-ui world digitizer / augmenter",
   "main": "index.js",
   "scripts": {
-    "start": "clear && ./node_modules/parcel-bundler/bin/cli.js index.html",
+    "start": "concurrently --names \"DEV,API\" -c \"blue,magenta\" \"npm run bundler\" \"cd api && nodemon\"",
+    "bundler": "./node_modules/parcel-bundler/bin/cli.js index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "proxy": "http://localhost:3000/",
@@ -26,6 +27,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "concurrently": "^3.5.1",
     "cross-fetch": "^1.1.1",
     "eslint-plugin-class-property": "^1.1.0",
     "material-ui": "^1.0.0-beta.30",
