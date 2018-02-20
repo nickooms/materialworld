@@ -3,6 +3,8 @@ const request = require('./CRAB');
 const NAME = 'Wegobject';
 const ID = `Identificator${NAME}`;
 
+const float = text => +text.replace(',', '.');
+
 class RoadObject {
   static get ID() {
     return ID;
@@ -17,6 +19,18 @@ class RoadObject {
       id: +x[ID],
       kind: +x[`Aard${NAME}`],
       streetId: +x[ID],
+      center: x.CenterX && x.CenterY && ({
+        x: float(x.CenterX),
+        y: float(x.CenterY),
+      }),
+      min: x.MinimumX && x.MinimumY && ({
+        x: float(x.MinimumX),
+        y: float(x.MinimumY),
+      }),
+      max: x.MaximumX && x.MaximumY && ({
+        x: float(x.MaximumX),
+        y: float(x.MaximumY),
+      }),
     };
   }
 
@@ -25,8 +39,12 @@ class RoadObject {
     return new RoadObject(RoadObject.map(results[0]));
   }
 
-  constructor({ id, kind }) {
-    Object.assign(this, { id, kind });
+  constructor({
+    id, kind, center, min, max,
+  }) {
+    Object.assign(this, {
+      id, kind, center, min, max,
+    });
   }
 }
 

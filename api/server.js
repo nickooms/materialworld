@@ -2,9 +2,10 @@ const express = require('express');
 const sqlite = require('sqlite');
 const chalk = require('chalk');
 
-const Street = require('./Street');
 const Region = require('./Region');
 const City = require('./City');
+const Street = require('./Street');
+const RoadObject = require('./RoadObject');
 
 const PORT = 3000;
 const app = express();
@@ -100,8 +101,18 @@ app.get('/street/:id/objects', async (req, res, next) => {
   }
 });
 
+app.get('/object/:id', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const object = await RoadObject.byId({ id });
+    res.send(object);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.listen(PORT);
 
-// console.log(JSON.stringify(chalk));
+const url = `http://localhost:${PORT}`;
 
-console.log(`Server running at ${chalk.magenta(`http://localhost:${PORT}`)}`);
+console.log(`Server running at ${chalk.magenta(url)}`);
