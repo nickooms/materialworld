@@ -1,4 +1,5 @@
 const request = require('./CRAB');
+const Street = require('./Street');
 
 const NAME = 'Wegobject';
 const ID = `Identificator${NAME}`;
@@ -18,7 +19,7 @@ class RoadObject {
     return {
       id: +x[ID],
       kind: +x[`Aard${NAME}`],
-      streetId: +x[ID],
+      streetId: +x[Street.ID],
       center: x.CenterX && x.CenterY && ({
         x: float(x.CenterX),
         y: float(x.CenterY),

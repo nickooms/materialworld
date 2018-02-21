@@ -101,6 +101,17 @@ app.get('/street/:id/objects', async (req, res, next) => {
   }
 });
 
+app.get('/street/:id/segments', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const street = await Street.byId({ id });
+    const segments = await street.segments();
+    res.send(segments);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/object/:id', async (req, res, next) => {
   try {
     const { id } = req.params;

@@ -1,4 +1,8 @@
-import { INVALIDATE_STREET, REQUEST_ROAD_OBJECTS, RECEIVE_ROAD_OBJECTS } from '../actions';
+import {
+  INVALIDATE_STREET,
+  REQUEST_ROAD_OBJECTS,
+  RECEIVE_ROAD_OBJECTS,
+} from '../actions';
 
 import roadObjects from './roadObjects';
 

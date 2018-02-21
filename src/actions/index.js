@@ -44,6 +44,16 @@ import {
 } from './roadObjects';
 
 import {
+  SELECT_ROAD_OBJECT, INVALIDATE_ROAD_OBJECT,
+  selectRoadObject, invalidateRoadObject,
+} from './roadObject';
+
+import {
+  REQUEST_ROAD_SEGMENTS, RECEIVE_ROAD_SEGMENTS,
+  shouldFetchRoadSegments, fetchRoadSegmentsIfNeeded,
+} from './roadSegments';
+
+import {
   TOGGLE_MOBILE_DRAWER_OPEN,
   toggleMobileDrawerOpen,
 } from './mobileDrawer';
@@ -74,6 +84,12 @@ export { shouldFetchHousenumbers, fetchHousenumbersIfNeeded };
 
 export { REQUEST_ROAD_OBJECTS, RECEIVE_ROAD_OBJECTS };
 export { shouldFetchRoadObjects, fetchRoadObjectsIfNeeded };
+
+export { SELECT_ROAD_OBJECT, INVALIDATE_ROAD_OBJECT };
+export { selectRoadObject, invalidateRoadObject };
+
+export { REQUEST_ROAD_SEGMENTS, RECEIVE_ROAD_SEGMENTS };
+export { shouldFetchRoadSegments, fetchRoadSegmentsIfNeeded };
 
 export { TOGGLE_MOBILE_DRAWER_OPEN };
 export { toggleMobileDrawerOpen };

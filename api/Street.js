@@ -1,6 +1,7 @@
 const request = require('./CRAB');
 const Housenumber = require('./Housenumber');
 const RoadObject = require('./RoadObject');
+const RoadSegment = require('./RoadSegment');
 const { SorteerVeld } = require('./constants');
 
 const NAME = 'Straatnaam';
@@ -59,6 +60,10 @@ class Street {
 
   async objects() {
     return this.list('Wegobjecten', RoadObject);
+  }
+
+  async segments() {
+    return this.list('Wegsegmenten', RoadSegment);
   }
 }
 

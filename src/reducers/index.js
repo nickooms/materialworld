@@ -7,6 +7,9 @@ import streetsByCity from './streetsByCity';
 import selectedStreet from './selectedStreet';
 import housenumbersByStreet from './housenumbersByStreet';
 import roadObjectsByStreet from './roadObjectsByStreet';
+import roadSegmentsByStreet from './roadSegmentsByStreet';
+import selectedRoadObject from './selectedRoadObject';
+import roadObjectById from './roadObjectById';
 import mobileDrawerOpen from './mobileDrawerOpen';
 
 export default {
@@ -19,5 +22,8 @@ export default {
   selectedStreet,
   housenumbersByStreet,
   roadObjectsByStreet,
+  roadSegmentsByStreet,
+  selectedRoadObject,
+  roadObjectById,
   mobileDrawerOpen,
 };
